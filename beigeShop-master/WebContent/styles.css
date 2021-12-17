@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+.no-stock-image {
+	filter: grayscale(100%);
+}
+
+.no-stock-background {
+	background-image: url("images/soldout.png");
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+
+.mainSlideImage {
+	margin: auto;
+}
+
+table td, table th {
+	vertical-align: middle;
+}
+
+/* 슬라이드 아이콘 */
+.carousel-control-prev-icon {
+ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d2b48c' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d2b48c' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+/*#navbarsExample08, #navbarsExample09{*/
+/*  !*font-family: 'Anton', sans-serif;*!*/
+/*  font-family: 'Scheherazade New', serif;*/
+/*}*/
+
+/*#title{*/
+/*  font-family: 'Bree Serif', serif;*/
+/*  padding-top: 30px;*/
+/*}*/
+/*#tables{*/
+/*  font-family: 'Sunflower', sans-serif;*/
+/*}*/
+
+
+/*#title h4{*/
+/*  margin-bottom: 30px;*/
+/*}*/
+/*#title .btn-sm{*/
+/*  margin-left: 10px;*/
+/*  margin-bottom: 4px;*/
+/*  align-content: end;*/
+/*  font-family: 'Sunflower', sans-serif;*/
+/*}*/
+
+
+#navbarsExample08, #navbarsExample09{
+  font-family: 'Anton', sans-serif;
+}
+
+#title{
+  font-family: 'Bree Serif', serif;
+  padding-top: 30px;
+}
+#tables{
+  font-family: 'Sunflower', sans-serif;
+}
+
+
+#title h4{
+  margin-bottom: 30px;
+  color: #d2b48c;
+}
+#title .btn-sm{
+  margin-left: 10px;
+  margin-bottom: 4px;
+  align-content: end;
+  /* font-family: 'Sunflower', sans-serif; */
+}
+
+
+/* https://nurilab.github.io/2020/04/27/follow_me_footer/ */

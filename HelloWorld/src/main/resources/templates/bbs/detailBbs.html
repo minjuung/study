@@ -1,0 +1,54 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>Website menu 09</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+</head>
+<body>
+<div id="colorlib-page">
+    <div th:include="navbar.html"></div>
+
+    <div id="colorlib-main">
+        <table>
+            <tr>
+                <td>카테고리</td>
+                <td th:text="${bbs.get().getBCategory()}">카테고리 내용</td>
+                <td>조회수</td>
+                <td th:text="${bbs.get().getBView()}">조회수</td>
+            </tr>
+            <tr>
+                <td>제목</td>
+                <td th:text="${bbs.get().getBTitle()}">제목 내용</td>
+                <td>작성자</td>
+                <td th:text="${bbs.get().getBUserId()}">작성자</td>
+            </tr>
+            <hr>
+            <tr>
+                <td>내용</td>
+                <td th:text="${bbs.get().getBContent()}">내용 내용</td>
+            </tr>
+
+        </table>
+                <p><input type="button" onclick="location.href='/bbs'" value="글목록"></p>
+    </div><!-- END COLORLIB-MAIN -->
+</div><!-- END COLORLIB-PAGE -->
+
+</section>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
+

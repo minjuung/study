@@ -1,0 +1,32 @@
+package com.javalec.Test2.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.javalec.Test2.dto.ReplyDto;
+
+@Repository
+public class ReplyDaoImpl implements ReplyDao{
+
+	@Autowired
+	private SqlSession sql;
+	
+	private static String namespace = "com.javalec.mappers.reply";
+	
+	//´ñ±Û º¸±â
+	@Override
+	public List<ReplyDto> readReply(int bId) {
+		return sql.selectList(namespace+".replyList", b_id);
+	}
+	
+	//´ñ±Û¾²±â
+	@Override
+	public void writeReply(ReplyDto dto) {
+		sql.insert(namespace+".writeReply", dto);
+	}
+
+}

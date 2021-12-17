@@ -1,0 +1,108 @@
+package com.javalec.Test2.dto;
+
+import java.sql.Timestamp;
+
+public class BDto {
+	int b_id;//글번호
+	String b_name;//글쓴이
+	String m_name;//
+	String b_category;//카테고리
+	String b_view;
+	String b_title;//글제목
+	String b_content;//글내용
+	Timestamp b_date;//글쓴 날짜
+	int b_up;//조회수
+	
+	public BDto() {
+		
+		}
+	
+	public BDto(int b_id, String b_name, String m_name, String b_category, String b_view, String b_title,
+			String b_content, Timestamp b_date, int b_up) {
+		super();
+		this.b_id = b_id;
+		this.b_name = b_name;
+		this.m_name = m_name;
+		this.b_category = b_category;
+		this.b_view = b_view;
+		this.b_title = b_title;
+		this.b_content = b_content;
+		this.b_date = b_date;
+		this.b_up = b_up;
+	}
+
+		
+	public int getB_id() {
+		return b_id;
+	}
+
+	public void setB_id(int b_id) {
+		this.b_id = b_id;
+	}
+
+	public String getB_name() {
+		return b_name;
+	}
+
+	public void setB_name(String b_name) {
+		this.b_name = b_name;
+	}
+
+	public String getM_name() {
+		return m_name;
+	}
+
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
+	}
+
+	public String getB_category() {
+		return b_category;
+	}
+
+	public void setB_category(String b_category) {
+		this.b_category = b_category;
+	}
+
+	public String getB_view() {
+		return b_view;
+	}
+
+	public void setB_view(String b_view) {
+		this.b_view = b_view;
+	}
+
+	public String getB_title() {
+		return b_title;
+	}
+
+	public void setB_title(String b_title) {
+		this.b_title = b_title;
+	}
+
+	public String getB_content() {
+		return b_content;
+	}
+
+	public void setB_content(String b_content) {
+		this.b_content = b_content;
+	}
+
+	public Timestamp getB_date() {
+		return b_date;
+	}
+
+	public void setB_date(Timestamp b_date) {
+		this.b_date = b_date;
+	}
+
+	public int getB_up() {
+		return b_up;
+	}
+
+	public void setB_up(int b_up) {
+		this.b_up = b_up;
+	}
+	
+	
+}

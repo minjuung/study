@@ -1,0 +1,78 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<table width="500" border="1">
+		<form method="post" action="modify">
+			<input type="hidden" name="bId" value="${content_view.bId}">
+			<tr>
+				<td>번호</td>
+				<td>${content_view.bId}</td>
+			</tr>
+			<tr>
+				<td>히트</td>
+				<td>${content_view.bHit}</td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td>
+					<input type="text" name="bName" value="${content_view.bName}">
+				</td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td>
+					<input type="text" name="bTitle" value="${content_view.bTitle}">
+				</td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td>
+					<input type="text" name="bContent" value="${content_view.bContent}">
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="수정">
+					&nbsp;&nbsp;<a href="list">목록보기</a>
+					&nbsp;&nbsp;<a href="delete?bId=${content_view.bId}">삭제</a>
+				</td>
+	
+		</form> 
+	</table>
+<!-- 댓글보기 -->
+	<c:forEach items="${replyList}" var="replyList">
+<li>
+	<div>
+		<p>${replyList.writer} / ${replyList.regdate}</p>
+		<p>${replyList.content }</p>
+	</div>
+</li>	
+</c:forEach>
+
+<!-- 댓글쓰기 -->
+	<form method="post" action="writeReply">
+	
+		<input type="hidden" name="bId" value="${content_view.bId}">
+		<p>
+			<label>댓글 작성자</label> <input type="text" name="writer">
+		</p>
+		<p>
+			<textarea rows="5" cols="50" name="content"></textarea>
+		</p>
+		<p>
+			<button type="submit">댓글 작성</button>
+		</p>
+	</form>
+	
+</div>
+	
+</body>
+</html>

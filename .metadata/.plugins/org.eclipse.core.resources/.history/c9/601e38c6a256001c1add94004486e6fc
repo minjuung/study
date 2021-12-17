@@ -1,0 +1,36 @@
+package com.javalec.Test2.service;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.javalec.Test2.dao.ReplyDao;
+import com.javalec.Test2.dto.ReplyDto;
+
+@Service
+public class ReplyServiceImpl implements ReplyService{
+	@Autowired
+	SqlSession sqlSession;
+
+	//´ñ±Ûº¸±â
+	@Override
+	public List<ReplyDto> readReply(int bId) {
+		ReplyDao dao = sqlSession.getMapper(ReplyDao.class);
+		List<ReplyDto> dtos = dao.readReply(bId);
+		return dtos;
+	}
+
+	//´ñ±Û¾²±â
+	@Override
+	public void writeReply(ReplyDto dto) {
+		ReplyDao dao = sqlSession.getMapper(ReplyDao.class);
+		dao.writeReply(dto);
+		
+	}
+	
+	
+	
+}

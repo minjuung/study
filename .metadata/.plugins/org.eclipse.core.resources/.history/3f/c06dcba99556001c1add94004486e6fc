@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.Test2.dao.IBDao">
+	<!-- 글목록 -->
+    <select id="list" resultType="com.javalec.Test2.dto.BDto" parameterType="hashmap" >
+	select bId, bName, bTitle, bContent,bDate,bHit
+	from(select bId, bName, bTitle, bContent,bDate,bHit, row_number() over(order by bId desc) as rNum 
+		from mvc_board WHERE 1=1 <include refid="search"></include>)
+	where rNum between #{rowStart} AND #{rowEnd} order by bId desc
+    </select>
+    
+    <!-- 상세글 -->
+ 	 <select id="contentView" parameterType="hashmap" resultType="com.javalec.Test2.dto.BDto">
+        select bId, bName, bTitle, bContent, bDate, bHit from mvc_board where bId = #{bId}
+    </select>
+    
+    <!-- 글쓰기 -->
+     <insert id="write" parameterType="hashmap">
+        insert into mvc_board(bId, bName, bTitle, bContent, bHit)
+        		values(MVC_BOARD_SEQ.nextval, #{bName},#{bTitle},#{bContent},0)
+    </insert>
+
+	<!-- 글 수정 -->
+     <update id="modify" parameterType="hashmap">
+        update mvc_board set bName = #{bName}, bTitle = #{bTitle}, bContent = #{bContent} where bId = #{bId}
+    </update>
+    <!-- 글 삭제 -->
+    <update id="delete" parameterType="hashmap">
+    	delete from mvc_board where bId = #{bId}
+    </update>
+    <!-- 조회수 -->
+    <update id="upHit" parameterType="hashmap">
+    	UPDATE MVC_BOARD SET bHit = bHit+1 WHERE bid= #{bId}
+    </update>
+    
+    <!-- 조회수별 베스트 -->
+    <select id="hitBest" resultType="com.javalec.Test2.dto.BDto">
+        
+        SELECT ROWNUM
+    		 , x.*
+ 			 FROM ( SELECT a.*
+          			 FROM mvc_board a
+       			   ORDER BY a.bhit desc
+      				 ) x <![CDATA[where rownum <=5]]>
+    </select>
+    <!-- 페이징 -->
+    <select id="getListWithPaging" resultType="com.javalec.Test2.dto.BDto">
+    	<![CDATA[select bId, bName, bTitle, bContent, bDate, bHit
+    			from (
+    				select
+    					rownum rn, bId, bName, bTitle, bContent, bDate, bHit
+    					from mvc_board
+    					where rownum <=20]]> 
+    </select>
+    <!-- 검색 -->
+    <select id ="listCount" resultType="int">
+    
+    	select count(bId)
+    	from mvc_board
+    	  WHERE 1=1
+		<include refid="search"></include>
+    	and bId>0
+    
+    </select>
+    
+    <sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND bTitle LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND bContent LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND bName LIKE '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
+</mapper>

@@ -1,0 +1,100 @@
+package com.javalec.Test2.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.javalec.Test2.dao.*;
+import com.javalec.Test2.dto.*;
+
+@Service("BService")
+public class BServiceImpl implements BService{
+	
+	@Autowired
+	private SqlSession sqlSession;
+
+	//글목록
+	@Override
+	public ArrayList<BDto> list(SearchCriteria scri) {
+		System.out.println("@@@### BServiceImpl.list() start");
+		
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		ArrayList<BDto> list = dao.list(scri);
+		
+		System.out.println("@@@### BServiceImpl.list() end");
+		
+		return list;
+	}
+	//글쓰기
+	@Override
+	public void write(HashMap<String, String> param) {
+		System.out.println("@@@### BServiceImpl.write() start");
+		
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		dao.write(param);
+		
+		System.out.println("@@@### BServiceImpl.write() end");
+		
+	}
+	//글 내용보기
+	@Override
+	public BDto contentView(HashMap<String, String> param) {
+		System.out.println("@@@### BServiceImpl.contentView() start");
+		
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		BDto dto= dao.contentView(param);
+		dao.upHit(param);
+		
+		System.out.println("@@@### BServiceImpl.contentView() end");
+		
+		return dto;
+	}
+	//글 수정
+	@Override
+	public void modify(HashMap<String, String> param) {
+		System.out.println("@@@### BServiceImpl.modify() start");
+		
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		dao.modify(param);
+		
+		System.out.println("@@@### BServiceImpl.modify() end");
+		
+		
+	}
+
+	//글 삭제
+	@Override
+	public void delete(HashMap<String, String> param) {
+		System.out.println("@@@### BServiceImpl.delete() start");
+		
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		dao.delete(param);
+		
+		System.out.println("@@@### BServiceImpl.delete() end");
+		
+		
+	}
+	//조회수별 베스트
+	@Override
+	public ArrayList<BDto> hitBest() {
+		
+		System.out.println("@@@### BServiceImpl.hitBest() start");
+		
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		ArrayList<BDto> hitBest = dao.hitBest();
+		
+		System.out.println("@@@### BServiceImpl.hitBest() end");
+		
+		return hitBest;
+	}
+	//페이징
+	@Override
+	public int listCount(SearchCriteria scri) {
+		IBDao dao = sqlSession.getMapper(IBDao.class);
+		return dao.listCount(scri);
+	}
+
+}

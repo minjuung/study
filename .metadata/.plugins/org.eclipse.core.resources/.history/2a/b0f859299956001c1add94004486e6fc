@@ -1,0 +1,133 @@
+package com.javalec.Test2.Controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.javalec.Test2.dao.*;
+import com.javalec.Test2.dto.*;
+import com.javalec.Test2.service.*;
+
+
+@Controller
+public class BController {
+
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@Autowired
+	private BService service;
+	
+	@Autowired
+	private ReplyService replyService;
+
+	//글목록
+	@RequestMapping("/list")
+	public String list(Model model, SearchCriteria scri) {
+		System.out.println("@@@### list() start");
+		
+		ArrayList<BDto> list = service.list(scri);
+		model.addAttribute("list", list);
+		
+		//페이징처리
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service.listCount(scri));
+		
+		model.addAttribute("pageMaker", pageMaker);
+		
+		System.out.println("@@@### list() end");
+		return "list";
+	}
+	
+	//글쓰기
+	@RequestMapping("/write_view")
+	public String write_view() {
+		System.out.println("@@@### write_view()");
+		return "write_view";
+	}
+	//글쓰기완료
+	@RequestMapping("/write")
+	public String write(@RequestParam HashMap<String, String> param, Model model) {
+		System.out.println("@@@### write() start");
+		
+		
+		service.write(param);
+		
+		System.out.println("@@@### write() end");
+		return "redirect:list";
+	}
+	
+	//글 상세화면
+	@RequestMapping("content_view")
+	public String content_view(@RequestParam HashMap<String, String> param, Model model) {
+		System.out.println("@@@### content_view() start");
+		
+		BDto dto = service.contentView(param);
+		model.addAttribute("content_view", dto);
+		
+		List<ReplyDto> replyList = replyService.readReply(dto.getB_id());
+		model.addAttribute("replyList", replyList);
+		System.out.println("@@@### content_view() end");
+		return "content_view";
+	}
+	
+	//글 수정
+	@RequestMapping(value = "/modify")
+	public String modify(@RequestParam HashMap<String, String> param, Model model) {
+		System.out.println("@@@### modify() start");
+		
+		service.modify(param);
+		
+		System.out.println("@@@### modify() end");
+		return "redirect:list";
+	}
+	//글 삭제
+	@RequestMapping(value = "/delete")
+	public String delete(@RequestParam HashMap<String, String> param, Model model) {
+		System.out.println("@@@### delete() start");
+		
+		service.delete(param);
+		
+		System.out.println("@@@### delete() end");
+		return "redirect:list";
+	}
+	//조회수 베스트	
+	@RequestMapping("/hitBest")
+	public String hitBest(Model model) {
+		System.out.println("@@@### hitBest() start");
+		
+		ArrayList<BDto> hitBest = service.hitBest();
+		model.addAttribute("hitBest", hitBest);
+		
+		System.out.println("@@@### hitBest() end");
+		return "hitBest";
+	}
+	//댓글쓰기
+	@RequestMapping("/writeReply")
+	public String writeReply(ReplyDto dto, SearchCriteria scri, Model model) throws Exception{
+		
+		replyService.writeReply(dto);
+		model.addAttribute("b_id", dto.getb_id());
+		model.addAttribute("page", scri.getPage());
+		model.addAttribute("perPageNum", scri.getPerPageNum());
+		model.addAttribute("searchType", scri.getSearchType());
+		model.addAttribute("keyword", scri.getKeyword());
+		
+		return "redirect:content_view";
+	}
+	
+	
+	
+}

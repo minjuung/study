@@ -1,0 +1,47 @@
+package com.javalec.Test2.dto;
+
+import java.util.Date;
+
+public class ReplyDto {
+	private int bId;//글번호
+	private int rno;//댓글번호
+	private String content;//글내용
+	private String writer;//글쓴이
+	private Date regdate;//날짜
+	public int getbId() {
+		return bId;
+	}
+	public void setbId(int bId) {
+		this.bId = bId;
+	}
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	
+	@Override
+	public String toString() {
+		return "ReplyVO [bId=" + bId + ", rno=" + rno + ", content=" + content + ", writer=" + writer + ", regdate="
+				+ regdate + "]";
+	}
+}

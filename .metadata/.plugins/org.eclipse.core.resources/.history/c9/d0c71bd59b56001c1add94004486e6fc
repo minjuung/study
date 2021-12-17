@@ -1,0 +1,13 @@
+package com.javalec.Test2.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.javalec.Test2.dto.ReplyDto;
+
+public interface ReplyDao {
+	//´ñ±Û º¸±â
+	public List<ReplyDto> readReply(int bId);
+	//´ñ±Û ¾²±â
+	public void writeReply(ReplyDto dto);
+	}

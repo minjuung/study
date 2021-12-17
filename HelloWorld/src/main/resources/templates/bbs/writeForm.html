@@ -1,0 +1,72 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>Website menu 09</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+    <style>
+        textarea{
+            width: 60%;
+            height: 500px;
+        }
+
+        .submitButton{
+            position: relative;
+            left: 60px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="colorlib-page">
+    <div th:include="navbar.html"></div>
+
+    <div id="colorlib-main">
+        <form method="post" action="/bbs/bbswrite">
+            <input type="hidden" th:value="${session.sessionId}" name="bUserId" id="bUserId"/>
+            <div>
+                카테고리
+                <select name="bCategory">
+                    <option value="자유">자유</option>
+                    <option value="질문">질문</option>
+                    <option value="익명">익명</option>
+                </select>
+            </div>
+            <div>
+                <p>제목</p>
+                <label for="bTitle"></label><input type="text" name="bTitle" id="bTitle" placeholder="제목입력"/>
+            </div>
+
+
+            <div>
+                <p>내용</p>
+                <textarea name="bContent" id="bContent" placeholder="내용입력"></textarea>
+                <div class="d-grid gap-2 d-md-flex justify-content-lg-center">
+                    <button class="btn btn-dark submitButton" type="submit">글작성</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div><!-- END COLORLIB-MAIN -->
+</div><!-- END COLORLIB-PAGE -->
+
+</section>
+<!--<script src="" th:src="@{/js/bbs.js}"></script>-->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
+

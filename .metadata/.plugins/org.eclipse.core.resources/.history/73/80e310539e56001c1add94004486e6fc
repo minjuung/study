@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.Test2.dao.IBDao">
+	<!-- 글목록 -->
+    <select id="list" resultType="com.javalec.Test2.dto.BDto" parameterType="hashmap" >
+	select b_id, m_id, b_title, b_content,b_date,b_up
+	from(select b_id, m_id, b_title, b_content,b_date,b_up, row_number() over(order by b_id desc) as rNum 
+		from hello_board WHERE 1=1 <include refid="search"></include>)
+	where rNum between #{rowStart} AND #{rowEnd} order by b_id desc
+    </select>
+    
+    <!-- 상세글 -->
+ 	 <select id="contentView" parameterType="hashmap" resultType="com.javalec.Test2.dto.BDto">
+        select b_id, m_id, b_title, b_content, b_date, b_up from hello_board where b_id = #{b_id}
+    </select>
+    
+    <!-- 글쓰기 -->
+     <insert id="write" parameterType="hashmap">
+        insert into hello_board(b_id, m_id, b_title, b_content, b_up)
+        		values(HELLO_BOARD_SEQ.nextval, #{m_id},#{b_title},#{b_content},0)
+    </insert>
+
+	<!-- 글 수정 -->
+     <update id="modify" parameterType="hashmap">
+        update hello_board set m_id = #{m_id}, b_title = #{b_title}, b_content = #{b_content} where b_id = #{b_id}
+    </update>
+    <!-- 글 삭제 -->
+    <update id="delete" parameterType="hashmap">
+    	delete from hello_board where b_id = #{b_id}
+    </update>
+    <!-- 조회수 -->
+    <update id="upHit" parameterType="hashmap">
+    	UPDATE hello_board SET b_up = b_up+1 WHERE b_id= #{b_id}
+    </update>
+    
+    <!-- 조회수별 베스트 -->
+    <select id="hitBest" resultType="com.javalec.Test2.dto.BDto">
+        
+        SELECT ROWNUM
+    		 , x.*
+ 			 FROM ( SELECT a.*
+          			 FROM hello_board a
+       			   ORDER BY a.b_hit desc
+      				 ) x <![CDATA[where rownum <=5]]>
+    </select>
+    <!-- 페이징 -->
+    <select id="getListWithPaging" resultType="com.javalec.Test2.dto.BDto">
+    	<![CDATA[select b_id, m_id, b_title, b_content, b_date, b_up
+    			from (
+    				select
+    					rownum rn, b_id, m_id, b_title, b_content, b_date, b_up
+    					from hello_board
+    					where rownum <=20]]> 
+    </select>
+    <!-- 검색 -->
+    <select id ="listCount" resultType="int">
+    
+    	select count(b_id)
+    	from hello_board
+    	  WHERE 1=1
+		<include refid="search"></include>
+    	and b_id>0
+    
+    </select>
+    
+    <sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND b_title LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND b_content LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND m_id LIKE '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
+</mapper>
